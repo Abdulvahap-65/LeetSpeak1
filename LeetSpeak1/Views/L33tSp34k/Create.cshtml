@@ -1,0 +1,58 @@
+﻿@model LeetSpeak1.Models.L33tSp34k
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    LeetSpeak1.Helpers.ResponseModel ApiResponse = (LeetSpeak1.Helpers.ResponseModel)ViewBag.ApiResponse;
+}
+
+<h2>Create</h2>
+@if (ApiResponse != null && ApiResponse.error != null)
+{
+<h4> @ApiResponse.error.code -> @ApiResponse.error.message</h4>
+}
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+  
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+  
+    <div class="form-group">
+        @Html.Label("Api", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <select name="api">
+                <option value="leetspeak">leet speak</option>
+                <option value="us2uk">us 2uk</option>
+                <option value="brooklyn">brook lyn</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.Label("Text", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Text, new { htmlAttributes = new { @class = "form-control", @required = "" } })
+            @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-success" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
